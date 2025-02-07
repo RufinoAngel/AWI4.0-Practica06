@@ -1,0 +1,28 @@
+{
+  "name": "mx.utxj.awi4.230499.practica06",
+  "version": "1.0.0",
+  "description": "Realizar un ejemplo de aplicación que permita la inserccion de datos correspondientes a un usuario, en una base de datos MongoDB",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "macaddress": "^0.5.3",
+    "moment-timezone": "^0.5.47",
+    "mongoose": "^8.10.0",
+    "node-forge": "^1.3.1",
+    "os": "^0.1.2",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
