@@ -178,12 +178,12 @@ app.get('/status', async (req, res) => {
   });
 });
 
-app.get('/sessionactives', async (req, res) => {
+app.get('/allSessions', async (req, res) => {
   const sessions = await Session.find();
 
   if (sessions.length === 0) {
     return res.status(404).json({
-      message: 'No hay sesiones activas'
+      message: 'No hay sesiones'
     });
   }
 
@@ -202,6 +202,34 @@ app.get('/sessionactives', async (req, res) => {
     message: 'Sesiones activas',
     sessions: formattedSessions
   });
+});
+app.get('/allCurrentSessions', async (req, res) => {
+  try {
+    const activeSessions = await Session.find({ status: "Activa" });
+
+    if (activeSessions.length === 0) {
+      return res.status(404).json({ message: 'No hay sesiones activas' });
+    }
+
+    const formattedSessions = activeSessions.map(session => ({
+      ...session._doc,
+      createdAt: moment(session.createdAt).tz('America/Mexico_City').toISOString(),
+      lastAccessed: moment(session.lastAccessed).tz('America/Mexico_City').toISOString(),
+    }));
+
+    res.status(200).json({ message: 'Sesiones activas', sessions: formattedSessions });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener sesiones activas', error });
+  }
+});
+
+app.delete('/deleteAllSessions', async (req, res) => {
+  try {
+    await Session.deleteMany({});
+    res.status(200).json({ message: 'Todas las sesiones han sido eliminadas.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar las sesiones', error });
+  }
 });
 
 setInterval(async () => {
